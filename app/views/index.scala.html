@@ -5,19 +5,28 @@
 @main("Index") {
 
 	<div class="container">
-  	@helper.form(routes.Application.signin()){
-  		@if( loginForm.hasGlobalErrors ){
+	
+
+		@if(  Session.getCurrentUser(ctx()) != null ){
+			<h2> Welcome @Session.getCurrentUser(ctx()).email </h2>
+			<a href='/signout' class='btn btn-danger'> Logout </a>
+		} else {
+ 	 	@helper.form(routes.Application.signin()){
+  			@if( loginForm.hasGlobalErrors ){
   			
-  			<div class="danger">
+  				<div class="danger">
   				<p> @loginForm.globalError.message </p>
-  			</div>
+  				</div>
+  			}
+  		
+  			@helper.inputText( loginForm("email") )
+  			@helper.inputPassword( loginForm("password") )
+  			<input type="submit" value="Login" class="btn btn-primary" />
+  		
   		}
-  		
-  		@helper.inputText( loginForm("email") )
-  		@helper.inputText( loginForm("password") )
-  		<input type="submit" value="Login" class="btn btn-primary" />
-  		
-  	</div>
+  	
   	}
+  	</div>
+  	
   		 	
 }

@@ -43,4 +43,9 @@ public class Application extends Controller {
 		}
 	}
 
+	public static Result signout(){
+		session().clear();
+		return redirect("/");
+	}
+	
 }
