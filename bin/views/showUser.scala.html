@@ -1,7 +1,15 @@
-@(user: User)
+@(user: User)(postForm: Form[Post])
+
+@import helper._
 
 @main(user.email){
 	<div class="container">
-		@user.email
+		<h2> @user.email </h2>
+		
+		@helper.form(routes.PostController.create()){
+			@helper.textarea( postForm("content") )
+			<input type="submit" value="Post" />
+		}
+	
 	</div>
 }
