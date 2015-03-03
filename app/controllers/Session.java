@@ -2,6 +2,7 @@ package controllers;
 
 import models.User;
 import play.mvc.Http.Context;
+import play.mvc.Result;
 import play.mvc.Security;
 
 /*
@@ -11,12 +12,23 @@ public class Session extends Security.Authenticator {
 	
 	
 	public String getUsername(Context ctx){
-		Long id = Long.parseLong(ctx.session().get("user_id"));
+		long id = Long.parseLong(ctx.session().get("user_id"));
 		User u = User.find(id);
 		if ( u != null){
 			return u.email;
 		}
 		return null;
+	}
+	
+	@Override
+	public Result onUnauthorized(Context ctx){
+		return redirect(routes.Application.signin());
+	}
+	
+	public static User getCurrentUser(Context ctx){
+		long id = Long.parseLong(ctx.session().get("user_id"));
+		User u = User.find(id);
+		return u;
 	}
 
 }
