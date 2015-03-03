@@ -11,5 +11,13 @@
 			<input type="submit" value="Post" />
 		}
 	
+		@if(user.posts.size() > 0){
+			<ul>
+				@for(post <- user.posts){
+					<li> @post.content </li>
+				}
+			</ul>
+		}
+		
 	</div>
 }
